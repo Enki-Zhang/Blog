@@ -9,6 +9,7 @@ import com.enki.utils.JwtUtil;
 import com.enki.utils.RedisCache;
 import com.enki.vo.BlogUserLoginVo;
 import com.enki.vo.UserInfoVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +27,7 @@ import java.util.Objects;
  */
 @Service
 //认证，判断用户登录是否成功
+@Slf4j
 public class BlogLoginServiceImpl implements BlogLoginService {
 
     @Autowired
@@ -60,7 +62,13 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         //把User转化为UserInfoVo，再放入vo对象的第二个参数
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
         BlogUserLoginVo vo = new BlogUserLoginVo(jwt,userInfoVo);
+        log.info("登陆成功");
         //封装响应返回
         return ResponseResult.okResult(vo);
+    }
+
+    @Override
+    public ResponseResult logout() {
+        return null;
     }
 }
