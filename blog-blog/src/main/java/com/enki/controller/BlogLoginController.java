@@ -38,6 +38,10 @@ public class BlogLoginController {
         return blogLoginService.login(user);
     }
 
+    /**
+     * 登陆退出
+     * @return
+     */
     @PostMapping("/logout")
     public ResponseResult logout(){
         return blogLoginService.logout();

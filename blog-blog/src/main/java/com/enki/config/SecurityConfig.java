@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     //把官方的PasswordEncoder密码加密方式替换成BCryptPasswordEncoder
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .accessDeniedHandler(accessDeniedHandler);
-
+//用于配置 Spring Security 的退出（Logout）功能，并禁用退出功能
         http.logout().disable();
 
         //把我们在huanf-blog工程写的JwtAuthenticationTokenFilter过滤器添加到Security的过滤器链中

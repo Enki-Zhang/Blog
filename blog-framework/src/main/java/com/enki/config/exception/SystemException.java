@@ -5,7 +5,7 @@ import com.enki.enums.AppHttpCodeEnum;
 /**
  * @author Enki
  * @ClassName SystemException
- * @Description: TODO
+ * @Description: 统一异常处理
  * @Date 2023/9/20 20:16
  * @Version 1.0
  */
