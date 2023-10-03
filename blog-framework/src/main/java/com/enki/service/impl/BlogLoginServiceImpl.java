@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -27,7 +28,6 @@ import java.util.Objects;
  */
 @Service
 //认证，判断用户登录是否成功
-@Slf4j
 public class BlogLoginServiceImpl implements BlogLoginService {
 
     @Autowired
@@ -35,7 +35,7 @@ public class BlogLoginServiceImpl implements BlogLoginService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    //RedisCache是我们在huanf-framework工程的config目录写的类
+    //RedisCache是我们在framework工程的config目录写的类
     private RedisCache redisCache;
 
     @Override
@@ -48,7 +48,7 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         if(Objects.isNull(authenticate)){
             throw new RuntimeException("用户名或密码错误");
         }
-//        获取userid
+        //获取userid
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userId = loginUser.getUser().getId().toString();
         //把这个userid通过我们写的JwtUtil工具类转成密文，这个密文就是token值
@@ -62,13 +62,26 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         //把User转化为UserInfoVo，再放入vo对象的第二个参数
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
         BlogUserLoginVo vo = new BlogUserLoginVo(jwt,userInfoVo);
-        log.info("登陆成功");
         //封装响应返回
         return ResponseResult.okResult(vo);
     }
 
+    //-----------------------------------退出登录------------------------------------------
+
     @Override
     public ResponseResult logout() {
-        return null;
+
+        //获取token，然后解析token值获取其中的userid。SecurityContextHolder是security官方提供的类
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //LoginUser是我们写的类
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+
+        //获取userid
+        Long userid = loginUser.getUser().getId();
+
+        //在redis根据key来删除用户的value值，注意之前我们在存key的时候，key是加了'bloglogin:'前缀
+        redisCache.deleteObject("bloglogin:"+userid);
+        //封装响应返回
+        return ResponseResult.okResult();
     }
 }
