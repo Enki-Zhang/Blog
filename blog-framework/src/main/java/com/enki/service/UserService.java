@@ -1,6 +1,7 @@
 package com.enki.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.enki.domain.ResponseResult;
 import com.enki.domain.User;
 
 /**
@@ -11,5 +12,12 @@ import com.enki.domain.User;
  * @Version 1.0
  */
 public interface UserService extends IService<User> {
+    //个人信息查询
+    ResponseResult userInfo();
 
+    //用户注册功能
+    ResponseResult register(User user);
+
+    //更新个人信息
+    ResponseResult updateUserInfo(User user);
 }

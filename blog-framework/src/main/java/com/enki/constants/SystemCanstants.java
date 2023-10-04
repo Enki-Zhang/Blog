@@ -43,5 +43,15 @@ public class SystemCanstants {
      */
     public static final String COMMENT_ROOT = "-1";
 
+    /**
+     * 文章的评论
+     */
+    public static final String ARTICLE_COMMENT = "0";
+
+    /**
+     * 友链的评论
+     */
+    public static final String LINK_COMMENT = "1";
+
 
 }

@@ -69,6 +69,16 @@ public class RedisCache {
     }
 
     /**
+     * 对redis中，某个hash结构里面的value进行递增操作 对应于浏览量增加1
+     *
+     * @param key 操作的是哪个hash结构
+     * @param hKey 对hash结构里面的哪个key进行操作
+     * @param v key对应的value值会递增多少
+     */
+    public void incrementCacheMapValue(String key,String hKey,long v){
+        redisTemplate.opsForHash().increment(key, hKey, v);
+    }
+    /**
      * 获得缓存的基本对象。
      *
      * @param key 缓存键值

@@ -35,3 +35,7 @@ mybatis-plus:
       logic-not-delete-value: 0
       # 主键自增策略，以mysql数据库为准
       id-type: auto
+oss:
+  accessKey: x4vVy3gfjfwRaRwwlHo5ZLQhwGdW-AMHfqToQHX3
+  secretKey: 3my1VzlVjtEPpioJGCQWngggn0rSAO7jJXpxIoKm
+  bucket: enkiblog

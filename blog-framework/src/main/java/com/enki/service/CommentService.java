@@ -14,10 +14,15 @@ import com.enki.domain.ResponseResult;
 public interface CommentService extends IService<Comment> {
     /**
      * 评论数量查询
+     *
      * @param articleId
      * @param pageNum
      * @param pageSize
      * @return
      */
-    ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize);
+    ResponseResult commentList(String commentType, Long articleId, Integer pageNum, Integer pageSize);
+
+
+    //在文章的评论区发送评论
+    ResponseResult addComment(Comment comment);
 }

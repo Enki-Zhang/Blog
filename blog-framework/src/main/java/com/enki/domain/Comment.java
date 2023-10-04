@@ -1,5 +1,7 @@
 package com.enki.domain;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -20,7 +22,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sg_comment")
-public class Comment {
+public class Comment  {
     @TableId
     private Long id;
 
@@ -37,13 +39,26 @@ public class Comment {
     //回复目标评论id
     private Long toCommentId;
 
+    //由于我们在MyMetaObjectHandler类配置了mybatisplus的字段自动填充
+    //所以就能指定哪个字段在什么时候进行自动填充，例如该类其它字段新增了数据，那么createBy字段就会自动填充值
+    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
 
+    //由于我们在MyMetaObjectHandler类配置了mybatisplus的字段自动填充
+    //所以就能指定哪个字段在什么时候进行自动填充，例如该类其它字段新增了数据，那么createTime字段就会自动填充值
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
+    //由于我们在MyMetaObjectHandler类配置了mybatisplus的字段自动填充
+    //所以就能指定哪个字段在什么时候进行自动填充，例如该类其它字段新增或更新了数据，那么createBy字段就会自动填充值
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
 
+    //由于我们在MyMetaObjectHandler类配置了mybatisplus的字段自动填充
+    //所以就能指定哪个字段在什么时候进行自动填充，例如该类其它字段新增或更新了数据，那么updateTime字段就会自动填充值
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
+
     //删除标志（0代表未删除，1代表已删除）
     private Integer delFlag;
 }
